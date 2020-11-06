@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f46fe3a96841045843c78cd5db9d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMoveset: 1
-  isWhite: 0
+  Type: ROOK
+  IsWhite: 0
   mySquare: {fileID: 0}
 --- !u!65 &8968811527542820518
 BoxCollider:

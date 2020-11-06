@@ -11,6 +11,7 @@ public class BoardSquare : MonoBehaviour
     private bool highlighted = false;
     private bool occupied = false;
     private Renderer highlightRend;
+    private Renderer validMoveRend;
     private Vector2Int gridPos;
     
 
@@ -18,6 +19,7 @@ public class BoardSquare : MonoBehaviour
     {
         //We need to get the child mesh and NOT the default mesh (also a child of prefab)
         highlightRend = this.transform.Find("highlightPlane").GetComponent<Renderer>();
+        validMoveRend = this.transform.Find("validMoveHighlight").GetComponent<Renderer>();
     }
 
     public void Update()
@@ -66,6 +68,16 @@ public class BoardSquare : MonoBehaviour
     public void DeselectSquare()
     {
         highlighted = false;
+    }
+
+    public void highlight()
+    {
+        validMoveRend.enabled = true;
+    }
+
+    public void unHighlight()
+    {
+        validMoveRend.enabled = false;
     }
 
 }
