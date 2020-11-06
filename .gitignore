@@ -19,6 +19,9 @@
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # [Aa]ssets/AssetStoreTools*
 
+##ignore public downloaded assets, why clog up github?
+[Aa]ssets/Assets MOOD WARE
+
 # Visual Studio cache directory
 .vs/
 
