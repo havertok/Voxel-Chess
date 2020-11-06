@@ -80,6 +80,41 @@ public class Piece : MonoBehaviour
                     moveDistance = 1;
                     break;
                 }
+            case "KNIGHT":
+                {
+                    moveDirections.Add(new Vector2Int(1, 2));
+                    moveDirections.Add(new Vector2Int(2, 1));
+                    moveDirections.Add(new Vector2Int(2, -1));
+                    moveDirections.Add(new Vector2Int(1, -2));
+                    moveDirections.Add(new Vector2Int(-1, -2));
+                    moveDirections.Add(new Vector2Int(-2, -1));
+                    moveDirections.Add(new Vector2Int(-2, 1));
+                    moveDirections.Add(new Vector2Int(-1, 2));
+                    moveDistance = 1;
+                    break;
+                }
+            case "QUEEN":
+                {
+                    moveDirections.Add(new Vector2Int(1, 1));
+                    moveDirections.Add(new Vector2Int(-1, 1));
+                    moveDirections.Add(new Vector2Int(-1, -1));
+                    moveDirections.Add(new Vector2Int(1, -1));
+                    moveDirections.Add(new Vector2Int(0, 1));
+                    moveDirections.Add(new Vector2Int(1, 0));
+                    moveDirections.Add(new Vector2Int(0, -1));
+                    moveDirections.Add(new Vector2Int(-1, 0));
+                    moveDistance = 8;
+                    break;
+                }
+            case "ROOK":
+                {
+                    moveDirections.Add(new Vector2Int(0, 1));
+                    moveDirections.Add(new Vector2Int(1, 0));
+                    moveDirections.Add(new Vector2Int(0, -1));
+                    moveDirections.Add(new Vector2Int(-1, 0));
+                    moveDistance = 8;
+                    break;
+                }
             default: break;
         }
 

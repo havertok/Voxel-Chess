@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: KING
-  IsWhite: 0
+  IsWhite: 1
   mySquare: {fileID: 0}
 --- !u!65 &8451787218611460177
 BoxCollider:
