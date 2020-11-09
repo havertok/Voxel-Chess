@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7737027261141687140}
   - component: {fileID: 2235272493788504700}
-  - component: {fileID: 7827691278103294060}
+  - component: {fileID: 388796013}
   m_Layer: 0
   m_Name: Pieces
   m_TagString: Untagged
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f8b243069db2044a78a185b495ba46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7827691278103294060
+--- !u!114 &388796013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,3 +56,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9dc45618da498d49985d1b061dffc8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameType: 1
+  pieceParentTransform: {fileID: 7737027261141687140}
+  pKing: {fileID: -1416601911738734861, guid: f822a883f5d3abd4ca790c836d113c71, type: 3}
+  pPawn: {fileID: 6983561464607310174, guid: c888b5510ff3dc442bdeb4a566b742e4, type: 3}
+  pKnight: {fileID: 2110552575466781364, guid: 1471e6b056c686741b0ad085fa679c4a, type: 3}
+  pQueen: {fileID: -5397437216898427933, guid: 5ead98609aeaa664da0bb5a720feb7ae, type: 3}
+  pRook: {fileID: 2339653258817985106, guid: 2485b5e851f4cc74a9bd72db7e4d0feb, type: 3}
+  pBishop: {fileID: 7595328201270040449, guid: ec14cc2bd156fb54eaf17ebbe46940a0, type: 3}
+  pKingb: {fileID: -3562752872075562386, guid: 1c9aca6d022253547b2c3da05a88f11e, type: 3}
+  pPawnb: {fileID: 1518706341029208270, guid: eadb1a5ab8567ea4bac1c76127f4e3f7, type: 3}
+  pKnightb: {fileID: 1843487435782461680, guid: 7c80ae2d097450849b78eb5fe953373c,
+    type: 3}
+  pQueenb: {fileID: -6534249678508204115, guid: fdfaa58afc9b8574ea2d3e8bfff5fac5,
+    type: 3}
+  pRookb: {fileID: 2785030808085219702, guid: 1c3eff2165cd37e4190e24c06d56e009, type: 3}
+  pBishopb: {fileID: -3545458287346856489, guid: 3d37401d62944d441a6d8fb1020ab6b3,
+    type: 3}

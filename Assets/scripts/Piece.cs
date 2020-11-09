@@ -44,6 +44,11 @@ public class Piece : MonoBehaviour
         return this.IsWhite;
     }
 
+    public string GetPieceType()
+    {
+        return this.Type;
+    }
+
     //Now generates and stores a list of direction offsets
     //Always start at N or NW and moves clockwise
     //Could be moved to movecalc helper class
@@ -115,6 +120,11 @@ public class Piece : MonoBehaviour
                     moveDistance = 8;
                     break;
                 }
+            case "CUSTOM":
+                moveDirections.Add(new Vector2Int(0, 1));
+                moveDirections.Add(new Vector2Int(1, 1));
+                moveDirections.Add(new Vector2Int(-1, 1));
+                break;
             default: break;
         }
 
