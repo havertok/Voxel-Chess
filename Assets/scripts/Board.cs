@@ -61,11 +61,12 @@ public class Board : MonoBehaviour
         MoveCalc.updateLocalBoard(boardArray);
     }
 
+    //WARNING! DO NOT ENTER: insane ternary logic below
     private void assignSquares(List<Piece> army, bool isWhite)
     {
         int x = 0;
         int pawnLine = isWhite ? 1 : 6;
-        int backLine = isWhite? 0 : 7;
+        int backLine = isWhite ? 0 : 7;
         foreach(Piece p in army)
         {
             if(p.GetSquare() == null)
@@ -113,7 +114,6 @@ public class Board : MonoBehaviour
 
     }
 
-    //TODO maybe move this to tile selector once I get it working
     //Create a ray and a racast from the current camera to collide with a boardsquare.
     //We are using message sent by the Ray to change board state, we have to keep track of the
     //"selected" tile (SelectedSquare) in order to clear the selected flag.

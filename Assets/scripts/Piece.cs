@@ -10,7 +10,7 @@ public class Piece : MonoBehaviour
     private Vector2Int position;
     private List<Vector2Int> moveDirections;
     private int moveDistance;
-    private bool hasMoved; //really only used for rooks and kings for castling
+    public bool hasMoved; //really only used for rooks and kings for castling (and pawns)
 
 
     public void Start()
@@ -60,7 +60,9 @@ public class Piece : MonoBehaviour
                 {
                     //Forward for white and black are opposites
                     moveDirections.Add(new Vector2Int(0, this.IsWhite ? 1 : -1));
-                    moveDistance = 1;
+                    moveDirections.Add(new Vector2Int(1, this.IsWhite ? 1 : -1));
+                    moveDirections.Add(new Vector2Int(-1, this.IsWhite ? 1 : -1));
+                    moveDistance = 2; //we will limit this in movecalc
                     break;
                 }
             case "BISHOP":
@@ -121,9 +123,10 @@ public class Piece : MonoBehaviour
                     break;
                 }
             case "CUSTOM":
-                moveDirections.Add(new Vector2Int(0, 1));
-                moveDirections.Add(new Vector2Int(1, 1));
-                moveDirections.Add(new Vector2Int(-1, 1));
+                moveDirections.Add(new Vector2Int(0, this.IsWhite ? 1 : -1));
+                moveDirections.Add(new Vector2Int(1, this.IsWhite ? 1 : -1));
+                moveDirections.Add(new Vector2Int(-1, this.IsWhite ? 1 : -1));
+                moveDistance = 8;
                 break;
             default: break;
         }

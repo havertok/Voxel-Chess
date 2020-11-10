@@ -65,4 +65,10 @@ public class PieceFactory : MonoBehaviour
         return playerPieceList;
     }
 
+    private List<Piece> genSillyArmy(bool isWhite)
+    {
+
+        return new List<Piece>();
+    }
+
 }

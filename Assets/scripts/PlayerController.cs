@@ -165,6 +165,8 @@ public class PlayerController : MonoBehaviour
         SelectedPiece.GetSquare().SetPiece(null);
         SelectedPiece.SetSquare(target);
         SelectedPiece.MatchPosition();
+        SelectedPiece.hasMoved = true;
+        //Call MoveCalc.GetValidMoves(SelectedPiece) here to update boardStatus
         DeselectPiece();
     }
 
@@ -174,8 +176,8 @@ public class PlayerController : MonoBehaviour
         //Moves attacking piece to square and sets relations
         MovePiece(target.GetSquare());
         target.SetSquare(null);
-        //Moves to invisible grid (maybe something else later)
-        target.transform.position = Vector3.Scale(gridPosmulti, new Vector3(1, 1, numCapturedPieces));
+        //Moves to lazy invisible grid (maybe something else later)
+        target.transform.position = Vector3.Scale(gridPosmulti, new Vector3(1, 1, 0.5f * numCapturedPieces));
         numCapturedPieces++;
     }
 

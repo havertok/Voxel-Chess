@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveCaleulator : MonoBehaviour
 {
     private Dictionary<string, BoardSquare> BoardCopy;
-    //String is the "0,0" name of boardsquare
+    //String is the "0,0" name of boardsquare [Zobrist_Hashing]
     private Dictionary<string, int> SquareStatus;
     //We must always know where the kings are
     private BoardSquare WhiteKing; 
@@ -28,6 +28,8 @@ public class MoveCaleulator : MonoBehaviour
     isChecker 
     0100 0000
     special pawncheck (for en passant if needed)0000_0000 0000
+    This should be set on a square with a peice that just moved, pawnMoveLimiter should check
+    square of same name in SquareStatus (To be implemented) 1_0000 0000 means can capture
     0001_0000 0000
      **/
 
@@ -82,10 +84,53 @@ public class MoveCaleulator : MonoBehaviour
         }
 
         //PASS possibleMoves into chain of qualifying functions
+        //Objects like lists are passed by reference, not sure I need to set pmoves here
+        if (piece.GetPieceType() == "PAWN") possibleMoves = pawnMoveLimiter(possibleMoves, piece);
+        if (piece.GetPieceType() == "KING") possibleMoves = kingMoveLimiter(possibleMoves, piece);
+
+        updateSquareStatus(possibleMoves);
         return possibleMoves;//if piece is king and this is NULL checkmate
     }
 
-    //BEGIN CHAIN HERE
     //Pass possibleMoves down to various checkers for blocking, castling, etc.
+    //Somehow add en passant rule here.
+    private List<BoardSquare> pawnMoveLimiter(List<BoardSquare> moveSet, Piece piece)
+    {
+        Vector2Int temp = piece.GetSquare().GetGridPos();
+        string tempName = temp.x+","+temp.y;
+        List <BoardSquare> removalList = new List<BoardSquare>();
+        foreach(BoardSquare bsq in moveSet)
+        {
+            Vector2Int bsqPos = bsq.GetGridPos();
+            //remove 2 len diagonal and 2 forward if pawn has moved
+            //if(Mathf.Abs(temp.x - bsqPos.x) > 1) removalList.Add(bsq);
+            if(piece.hasMoved && Mathf.Abs(temp.y - bsqPos.y) == 2) removalList.Add(bsq);
+            //in the future, we will check board status here isntead of this ugly thing
+            if(BoardCopy[bsq.name].GetPiece() != null)
+            {
+                if (Mathf.Abs(temp.x - bsqPos.x) == 0) removalList.Add(bsq);
+            }
+            else if(Mathf.Abs(temp.x - bsqPos.x) > 0)
+            {
+                removalList.Add(bsq);
+            }
+        }
+        //Removes evertyhing in moveset that we need to using super legible lembda
+        moveSet.RemoveAll(item => removalList.Contains(item));
+        return moveSet;
+    }
+
+    private List<BoardSquare> kingMoveLimiter(List<BoardSquare> moveSet, Piece piece)
+    {
+
+        return moveSet;
+    }
+
+    //If we iterate through all pieces at game start and update boardstatus we should only
+    //have to call this after a move
+    private void updateSquareStatus(List<BoardSquare> newMoves)
+    {
+
+    }
 
 }
