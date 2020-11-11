@@ -35,18 +35,32 @@ public class MoveCaleulator : MonoBehaviour
 
     public void InitStatus(Dictionary<string, BoardSquare> boardArray)
     {
-        //First pass sets status to occupied for respective pieces:
+        this.BoardCopy = boardArray;
+        List<Piece> allPieces = new List<Piece>();
         foreach (BoardSquare sq in boardArray.Values)
         {
-            
+            if (sq.GetPiece() != null) allPieces.Add(sq.GetPiece());
         }
-        //Second pass uses utility function to set status for squars (threatened, covered, etc)
+        foreach(Piece p in allPieces)
+        {
+            GetValidMoves(p); //Part of getting valid moves is setting potential boad sq covered states
+        }
 
     }
 
-    public void updateLocalBoard(Dictionary<string, BoardSquare> board)
+    //Called after a move has been made and the OLD moveset is cleared.
+    //If peice WAS blocked and now isn't it now covers squares it did not before.
+    public void updateLocalBoard()
     {
-        BoardCopy = board;
+        List<Piece> allPieces = new List<Piece>();
+        foreach (BoardSquare sq in BoardCopy.Values)
+        {
+            if (sq.GetPiece() != null) allPieces.Add(sq.GetPiece());
+        }
+        foreach (Piece p in allPieces)
+        {
+            GetValidMoves(p); //Part of getting valid moves is setting potential boad sq covered states
+        }
     }
 
     public List<BoardSquare> GetValidMoves(Piece piece)
@@ -55,7 +69,8 @@ public class MoveCaleulator : MonoBehaviour
         BoardSquare bsq;
         Vector2Int temp = piece.GetSquare().GetGridPos();
         string tempName = "";
-        foreach(Vector2Int v in piece.GetMoveOffest())
+        print("piece is a: "+piece.GetPieceType());
+        foreach (Vector2Int v in piece.GetMoveOffest())
         {
             temp = piece.GetSquare().GetGridPos();
             for (int i = 0; i < piece.GetMoveDistance(); i++)
@@ -88,7 +103,7 @@ public class MoveCaleulator : MonoBehaviour
         if (piece.GetPieceType() == "PAWN") possibleMoves = pawnMoveLimiter(possibleMoves, piece);
         if (piece.GetPieceType() == "KING") possibleMoves = kingMoveLimiter(possibleMoves, piece);
 
-        updateSquareStatus(possibleMoves);
+        updateSquareStatus(possibleMoves, piece);
         return possibleMoves;//if piece is king and this is NULL checkmate
     }
 
@@ -128,9 +143,25 @@ public class MoveCaleulator : MonoBehaviour
 
     //If we iterate through all pieces at game start and update boardstatus we should only
     //have to call this after a move
-    private void updateSquareStatus(List<BoardSquare> newMoves)
+    private void updateSquareStatus(List<BoardSquare> newMoves, Piece thisPiece)
     {
+        foreach(BoardSquare sq in newMoves)
+        {
+            if (thisPiece.isWhite())
+            {
+                sq.setCoveredByWhite(true);
+            }
+            else
+            {
+                sq.setCoveredByBlack(true);
+            }
+        }
+    }
 
+    //TODO special PAWN coverage status updater here, since pawns capture rules are different
+    private void pawnCoverageStatus(List<BoardSquare> newMoves, Piece thisPiece)
+    {
+        
     }
 
 }

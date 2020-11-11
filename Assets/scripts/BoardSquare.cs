@@ -13,7 +13,9 @@ public class BoardSquare : MonoBehaviour
     private Renderer highlightRend;
     private Renderer validMoveRend;
     private Vector2Int gridPos;
-    
+    //A piece of _color can move to this square; serialized to view in inspector
+    [SerializeField] private bool covered_black;
+    [SerializeField] private bool covered_white;
 
     public void Start()
     {
@@ -78,6 +80,26 @@ public class BoardSquare : MonoBehaviour
     public void unHighlight()
     {
         validMoveRend.enabled = false;
+    }
+
+    public bool coveredByWhite()
+    {
+        return this.covered_white;
+    }
+
+    public bool coveredByBlack()
+    {
+        return this.covered_black;
+    }
+
+    public void setCoveredByWhite(bool covered)
+    {
+        this.covered_white = covered;
+    }
+
+    public void setCoveredByBlack(bool covered)
+    {
+        this.covered_black = covered;
     }
 
 }

@@ -7,6 +7,7 @@ public class Board : MonoBehaviour
     //Eventually want to consider generating a board randomly
     //FOR NOW:  Board.cs acts as the game manager.
     private Dictionary<string, BoardSquare> boardArray;
+    private Dictionary<string, Piece> pieceDict;
     private Camera PlayerCam;
     private GameObject PieceSelectorLight;
     private Light PSLtoggle;
@@ -57,8 +58,7 @@ public class Board : MonoBehaviour
         blackArmy = pieceFactory.getPlayerArmy(false);
         assignSquares(whiteArmy, true);
         assignSquares(blackArmy, false);
-
-        MoveCalc.updateLocalBoard(boardArray);
+        MoveCalc.InitStatus(boardArray);
     }
 
     //WARNING! DO NOT ENTER: insane ternary logic below

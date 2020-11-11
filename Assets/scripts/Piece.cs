@@ -12,8 +12,10 @@ public class Piece : MonoBehaviour
     private int moveDistance;
     public bool hasMoved; //really only used for rooks and kings for castling (and pawns)
 
-
-    public void Start()
+    //So here's a fun bug.  This used to be start, but since GenMoveOffset would get called
+    //in movecalc from Board, the pieces weren't fully initialized when that was called
+    //during setup.  Changing this from Start() to Awake() fixed that bug.
+    public void Awake()
     {
         moveDirections = new List<Vector2Int>();
         GenMoveOffset();
@@ -123,15 +125,15 @@ public class Piece : MonoBehaviour
                     break;
                 }
             case "CUSTOM":
-                moveDirections.Add(new Vector2Int(0, this.IsWhite ? 1 : -1));
-                moveDirections.Add(new Vector2Int(1, this.IsWhite ? 1 : -1));
-                moveDirections.Add(new Vector2Int(-1, this.IsWhite ? 1 : -1));
-                moveDistance = 8;
-                break;
+                {
+                    moveDirections.Add(new Vector2Int(0, this.IsWhite ? 1 : -1));
+                    moveDirections.Add(new Vector2Int(1, this.IsWhite ? 1 : -1));
+                    moveDirections.Add(new Vector2Int(-1, this.IsWhite ? 1 : -1));
+                    moveDistance = 8;
+                    break;
+                }
             default: break;
         }
-
-
     }
 
     public List<Vector2Int> GetMoveOffest()

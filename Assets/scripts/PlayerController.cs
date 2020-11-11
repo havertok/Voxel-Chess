@@ -129,7 +129,6 @@ public class PlayerController : MonoBehaviour
                 PSLtoggle.enabled = true;
 
                 //Now get valid moves and highlight them
-                MoveCalc.updateLocalBoard(boardArray);
                 moveSet = MoveCalc.GetValidMoves(SelectedPiece);
                 HighLightMoves();
             }
@@ -166,7 +165,7 @@ public class PlayerController : MonoBehaviour
         SelectedPiece.SetSquare(target);
         SelectedPiece.MatchPosition();
         SelectedPiece.hasMoved = true;
-        //Call MoveCalc.GetValidMoves(SelectedPiece) here to update boardStatus
+        clearOldCoverStatus();
         DeselectPiece();
     }
 
@@ -209,5 +208,23 @@ public class PlayerController : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    private void clearOldCoverStatus()
+    {
+        //get old moveset and clear coverage
+        foreach (BoardSquare sq in moveSet)
+        {
+            if (SelectedPiece.isWhite())
+            {
+                sq.setCoveredByWhite(false);
+            }
+            else
+            {
+                sq.setCoveredByBlack(false);
+            }
+        }
+        //get the new moveset, setting coverage is part of moveset
+        MoveCalc.updateLocalBoard(); 
     }
 }
