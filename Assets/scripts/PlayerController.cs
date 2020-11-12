@@ -227,4 +227,9 @@ public class PlayerController : MonoBehaviour
         //get the new moveset, setting coverage is part of moveset
         MoveCalc.updateLocalBoard(); 
     }
+
+    private void kingInCheck()
+    {
+        print("king is in check");
+    }
 }

@@ -59,8 +59,14 @@ public class MoveCaleulator : MonoBehaviour
         }
         foreach (Piece p in allPieces)
         {
-            GetValidMoves(p); //Part of getting valid moves is setting potential boad sq covered states
+            //Part of getting valid moves is setting potential boad sq covered states
+            List<BoardSquare> moves = GetValidMoves(p); 
+            if(p.GetPieceType() == "PAWN")
+            {
+                pawnCoverageStatus(moves, p);
+            }
         }
+        specialKingCheck(allPieces);
     }
 
     public List<BoardSquare> GetValidMoves(Piece piece)
@@ -69,7 +75,6 @@ public class MoveCaleulator : MonoBehaviour
         BoardSquare bsq;
         Vector2Int temp = piece.GetSquare().GetGridPos();
         string tempName = "";
-        print("piece is a: "+piece.GetPieceType());
         foreach (Vector2Int v in piece.GetMoveOffest())
         {
             temp = piece.GetSquare().GetGridPos();
@@ -104,7 +109,7 @@ public class MoveCaleulator : MonoBehaviour
         if (piece.GetPieceType() == "KING") possibleMoves = kingMoveLimiter(possibleMoves, piece);
 
         updateSquareStatus(possibleMoves, piece);
-        return possibleMoves;//if piece is king and this is NULL checkmate
+        return possibleMoves;
     }
 
     //Pass possibleMoves down to various checkers for blocking, castling, etc.
@@ -137,7 +142,19 @@ public class MoveCaleulator : MonoBehaviour
 
     private List<BoardSquare> kingMoveLimiter(List<BoardSquare> moveSet, Piece piece)
     {
-
+        List<BoardSquare> removalList = new List<BoardSquare>();
+        foreach (BoardSquare bsq in moveSet)
+        {
+            if (piece.isWhite() && bsq.coveredByBlack())
+            {
+                removalList.Add(bsq);
+            }
+            if(!piece.isWhite() && bsq.coveredByWhite())
+            {
+                removalList.Add(bsq);
+            }
+        }
+        moveSet.RemoveAll(item => removalList.Contains(item));
         return moveSet;
     }
 
@@ -162,6 +179,39 @@ public class MoveCaleulator : MonoBehaviour
     private void pawnCoverageStatus(List<BoardSquare> newMoves, Piece thisPiece)
     {
         
+    }
+
+    //Another bug, check was in line 60, but since Lists are orderd randomly, the king would sometimes
+    //check for coverage status BEFORE another piece, so a square would be correctly flagged as covered
+    //by an opposing piece (and removed by the kingMoveLimiter) but not trigger check message
+    private void specialKingCheck(List<Piece> allPieces)
+    {
+        foreach(Piece p in allPieces)
+        {
+            if (p.GetPieceType() == "KING") isKingInCheck(GetValidMoves(p), p);
+        }
+    }
+
+    //ugly
+    private void isKingInCheck(List<BoardSquare> myMoves, Piece king)
+    {
+        PlayerController playerCont = FindObjectOfType<Board>().GetComponent<PlayerController>();
+        if (king.isWhite() && king.GetSquare().coveredByBlack())
+        {
+            playerCont.SendMessage("kingInCheck"); //will send specific to piece color
+            if(myMoves == null) //need to check for blocking piece
+            {
+                print("CheckMate");
+            }
+        }
+        if (!king.isWhite() && king.GetSquare().coveredByWhite())
+        {
+            playerCont.SendMessage("kingInCheck"); //will send specific to piece color
+            if (myMoves == null)
+            {
+                playerCont.SendMessage("kingInCheck");
+            }
+        }
     }
 
 }

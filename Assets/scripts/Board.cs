@@ -125,6 +125,12 @@ public class Board : MonoBehaviour
         ray = PlayerCam.ScreenPointToRay(Input.mousePosition);
         plCont.PlayerTurn(ray, boardArray, this.gameState);
         this.gameState = plCont.GetNewPlayerState();
-    } 
+    }
+
+    //will add ui and stuff to this eventually, if in playcont sendMessage()
+    private void checkMate()
+    {
+        print("CHECKMATE");
+    }
     
 }
