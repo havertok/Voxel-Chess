@@ -1,6 +1,7 @@
 # Voxel-Chess
 ## Personal Project
-Unfortunately storing the skybox assets that aren't mine, oops
+
+I think this will have to be rewritten, almost entirely.  Putting it on indeterminate hiatus .
 
 Links for later:
 https://stackoverflow.com/questions/56267842/cleaning-up-and-migrating-existing-unity-project-into-new-one-or-another-pc
